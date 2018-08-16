@@ -15,28 +15,49 @@ Using this module's approach to installing extensions can be particularly helpfu
 4. You're using a version of Lucee that doesn't support ENV extension installations.
 
 ## Using this module
-This module it makes several assumptions about file/folder structure.
+This module doesn't just "work out of the box"; it it makes several assumptions about file/folder structure. Here's how to use it:
 
+1. __It needs to be a dependency in your `box.json`__
+  So, if you don't have a `box.json`, you'll need to add one. At it's most basic, it would look something like this:
+    ```json
+    {
+      "name": "your-great-app",
+      "version": "0.0.1",
+      "dependencies":{
+        "docker-lex-install" : "0.0.1"
+      }
+    }
+    ```
+  If you didn't want to depend on downloading and installing the package from [ForgeBox.io](https://www.forgebox.io/), you could load the folder into your container and replace `0.0.1` with the path to it.
 
-### It needs to be a dependency in your `box.json`
-
-TODO
-
-### Extensions need to be in `/config/extensions`
-
-Within the container, on server start (`onServerStart()`), it looks for `.lex` files in: `/config/extensions`. You'll need to load the extensions that you want to use into this folder; your Dockerfile might include something along these lines:
-
-```
-# Copy in our config file(s)
-# Our local /config folder should include /extensions
-COPY ./config/ /config/
-```
-
-### `box install` needs to be run
-
-TODO
-
-### The server needs to be warmed up
+2. __Extensions need to be in `/config/extensions`__
+  The module runs `onServerStart()` and looks for `.lex` files in: `/config/extensions`. Consequently, you'll need to load the extensions that you want to use into that folder:
+    ```
+    config
+    |--extensions
+    |  |--extension-memcached-3.0.2.29.lex
+    |  |--extension-loganalyzer-2.3.1.16.lex
+    ```
+  Given this folder structure, your Dockerfile might include something along these lines:
+    ```
+    # Copy in our config file(s)
+    # Our local /config folder should include /extensions
+    COPY ./config/ /config/
+    ```
+  For what it's worth, I'm open to changing this convention if an alternative approach is preferable.
+3. __`box install` needs to be run__
+  Before warming up the server, you need to make sure the dependency is installed. You can do this in your Dockerfile:
+    ```
+    # Install our box.json dependencies. Needed to ensure the warmup runs the install process for the plugins
+    WORKDIR $APP_DIR
+    RUN box install
+    ```
+4. __The server needs to be warmed up__
+  Warming up the server makes sure that, among other things, that Lucee has time to recognize and install the extensions. Again within the Dockerfile, you can use the script that comes with the CommandBox image to do this:
+    ```
+    # Warm up our server
+    RUN ${BUILD_DIR}/util/warmup-server.sh
+    ```
 
 TODO
 
