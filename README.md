@@ -4,17 +4,19 @@
 _This is an early stage project that was initially developed for internal use. Feel free to use the issue tracker to report bugs or suggest improvements._
 
 ## What it does
-This module automatically loads all provided Lucee extension files (.lex) into the server's `/deploy` folder. It is intended to be used with servers that are being warmed up, in order to ensure that the extensions are installed and ready to use when the container is deployed.
+This module automatically loads all provided Lucee extension (.lex) files into the CommandBox server's `/lucee-server/deploy` folder when the server starts. It's intended to be used by [CommandBox deployments](https://hub.docker.com/r/ortussolutions/commandbox/) of Lucee on Docker, in order to make Lucee extensions available while warming up a server, so that they're ready to use when the container is deployed.
 
-This approach to installing extensions can be particularly helpful when:
+There are other approaches to this issue, including the use of the [`LUCEE_EXTENSIONS` environment variable](https://labs.daemon.com.au/t/installing-the-memcached-extension-for-lucee-5-x/319), which you may find preferable, depending on your use case.
+
+Using this module's approach to installing extensions can be particularly helpful when:
 1. You want to install a specific version of an extension
 2. You don't want to be reliant on HTTP calls to download the extensions from Lucee.org during your build.
 3. You want to know exactly what extensions you're installing (instead of bothering with the extension GUIDs)
 4. You're using a version of Lucee that doesn't support ENV extension installations.
 
 ## Using this module
+This module it makes several assumptions about file/folder structure.
 
-__This module doesn't just "work out of the box".__ It was designed for a specific use case (CommandBox deployments of Lucee on Docker), and it makes several assumptions about file/folder structure.
 
 ### It needs to be a dependency in your `box.json`
 
