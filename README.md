@@ -17,8 +17,7 @@ Using this module's approach to installing extensions can be particularly helpfu
 ## Using this module
 This module doesn't just "work out of the box"; it it makes several assumptions about file/folder structure. Here's how to use it:
 
-1. __It needs to be a dependency in your `box.json`__
-
+1. __It needs to be a dependency in your `box.json`__  
     So, if you don't have a `box.json`, you'll need to add one. At it's most basic, it would look something like this:
     ```json
     {
@@ -31,7 +30,7 @@ This module doesn't just "work out of the box"; it it makes several assumptions 
     ```
     If you didn't want to depend on downloading and installing the package from [ForgeBox.io](https://www.forgebox.io/), you could load the folder into your container and replace `0.0.1` with the path to it.
 
-2. __Extensions need to be in `/config/extensions`__
+2. __Extensions need to be in `/config/extensions`__  
     The module runs `onServerStart()` and looks for `.lex` files the container's `/config/extensions`. Consequently, that's where you'll need to load the extensions that you want to use:
     ```
     └── config
@@ -46,14 +45,14 @@ This module doesn't just "work out of the box"; it it makes several assumptions 
     COPY ./config/ /config/
     ```
     For what it's worth, I'm open to changing this convention if an alternative approach is preferable.
-3. __`box install` needs to be run__
+3. __`box install` needs to be run__  
     Before warming up the server, you need to make sure the dependency is installed. You can do this in your Dockerfile:
     ```
     # Install our box.json dependencies. Needed to ensure the warmup runs the install process for the plugins
     WORKDIR $APP_DIR
     RUN box install
     ```
-4. __The server needs to be warmed up__
+4. __The server needs to be warmed up__  
     Warming up the server ensures that, among other things, Lucee has time to recognize and install the extensions. Again within the Dockerfile, you can use the script that comes with the CommandBox image to do this:
     ```
     # Warm up our server
