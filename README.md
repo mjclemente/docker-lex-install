@@ -31,12 +31,12 @@ This module doesn't just "work out of the box"; it it makes several assumptions 
   If you didn't want to depend on downloading and installing the package from [ForgeBox.io](https://www.forgebox.io/), you could load the folder into your container and replace `0.0.1` with the path to it.
 
 2. __Extensions need to be in `/config/extensions`__
-  The module runs `onServerStart()` and looks for `.lex` files in: `/config/extensions`. Consequently, you'll need to load the extensions that you want to use into that folder:
+  The module runs `onServerStart()` and looks for `.lex` files the container's `/config/extensions`. Consequently, that's where you'll need to load the extensions that you want to use:
     ```
-    config
-    |--extensions
-    |  |--extension-memcached-3.0.2.29.lex
-    |  |--extension-loganalyzer-2.3.1.16.lex
+    └── config
+        └── extensions
+            ├── extension-loganalyzer-2.3.1.16.lex
+            └── extension-memcached-3.0.2.29.lex
     ```
   Given this folder structure, your Dockerfile might include something along these lines:
     ```
@@ -53,13 +53,13 @@ This module doesn't just "work out of the box"; it it makes several assumptions 
     RUN box install
     ```
 4. __The server needs to be warmed up__
-  Warming up the server makes sure that, among other things, that Lucee has time to recognize and install the extensions. Again within the Dockerfile, you can use the script that comes with the CommandBox image to do this:
+  Warming up the server ensures that, among other things, Lucee has time to recognize and install the extensions. Again within the Dockerfile, you can use the script that comes with the CommandBox image to do this:
     ```
     # Warm up our server
     RUN ${BUILD_DIR}/util/warmup-server.sh
     ```
 
-TODO
+When set up correctly, this example would result in the CommandBox Lucee server starting with the Memcached and Log Analyzer extensions installed.
 
 ## Questions
 For questions that aren't about bugs, feel free to hit me up on the [CFML Slack Channel](http://cfml-slack.herokuapp.com); I'm @mjclemente. You'll likely get a much faster response than creating an issue here.
