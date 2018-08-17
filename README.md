@@ -18,6 +18,7 @@ Using this module's approach to installing extensions can be particularly helpfu
 This module doesn't just "work out of the box"; it it makes several assumptions about file/folder structure. Here's how to use it:
 
 1. __It needs to be a dependency in your `box.json`__
+
     So, if you don't have a `box.json`, you'll need to add one. At it's most basic, it would look something like this:
     ```json
     {
