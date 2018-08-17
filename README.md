@@ -19,7 +19,7 @@ This module doesn't just "work out of the box"; it it makes several assumptions 
 
 1. __It needs to be a dependency in your `box.json`__  
     So, if you don't have a `box.json`, you'll need to add one. At it's most basic, it would look something like this:
-    ```json
+    ```JSON
     {
       "name": "your-great-app",
       "version": "0.0.1",
@@ -39,7 +39,7 @@ This module doesn't just "work out of the box"; it it makes several assumptions 
             └── extension-memcached-3.0.2.29.lex
     ```
     Given this folder structure, your Dockerfile might include something along these lines:
-    ```
+    ```Dockerfile
     # Copy in our config file(s)
     # Our local /config folder should include /extensions
     COPY ./config/ /config/
@@ -47,14 +47,14 @@ This module doesn't just "work out of the box"; it it makes several assumptions 
     For what it's worth, I'm open to changing this convention if an alternative approach is preferable.
 3. __`box install` needs to be run__  
     Before warming up the server, you need to make sure the dependency is installed. You can do this in your Dockerfile:
-    ```
+    ```Dockerfile
     # Install our box.json dependencies. Needed to ensure the warmup runs the install process for the plugins
     WORKDIR $APP_DIR
     RUN box install
     ```
 4. __The server needs to be warmed up__  
     Warming up the server ensures that, among other things, Lucee has time to recognize and install the extensions. Again within the Dockerfile, you can use the script that comes with the CommandBox image to do this:
-    ```
+    ```Dockerfile
     # Warm up our server
     RUN ${BUILD_DIR}/util/warmup-server.sh
     ```
