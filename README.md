@@ -28,7 +28,7 @@ This module doesn't just "work out of the box"; it it makes several assumptions 
       }
     }
     ```
-  If you didn't want to depend on downloading and installing the package from [ForgeBox.io](https://www.forgebox.io/), you could load the folder into your container and replace `0.0.1` with the path to it.
+    If you didn't want to depend on downloading and installing the package from [ForgeBox.io](https://www.forgebox.io/), you could load the folder into your container and replace `0.0.1` with the path to it.
 
 2. __Extensions need to be in `/config/extensions`__
   The module runs `onServerStart()` and looks for `.lex` files the container's `/config/extensions`. Consequently, that's where you'll need to load the extensions that you want to use:
@@ -38,13 +38,13 @@ This module doesn't just "work out of the box"; it it makes several assumptions 
             ├── extension-loganalyzer-2.3.1.16.lex
             └── extension-memcached-3.0.2.29.lex
     ```
-  Given this folder structure, your Dockerfile might include something along these lines:
+    Given this folder structure, your Dockerfile might include something along these lines:
     ```
     # Copy in our config file(s)
     # Our local /config folder should include /extensions
     COPY ./config/ /config/
     ```
-  For what it's worth, I'm open to changing this convention if an alternative approach is preferable.
+    For what it's worth, I'm open to changing this convention if an alternative approach is preferable.
 3. __`box install` needs to be run__
   Before warming up the server, you need to make sure the dependency is installed. You can do this in your Dockerfile:
     ```
@@ -58,6 +58,7 @@ This module doesn't just "work out of the box"; it it makes several assumptions 
     # Warm up our server
     RUN ${BUILD_DIR}/util/warmup-server.sh
     ```
+
 
 When set up correctly, this example would result in the CommandBox Lucee server starting with the Memcached and Log Analyzer extensions installed.
 
