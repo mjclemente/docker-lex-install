@@ -63,6 +63,7 @@ component accessors="true" {
       }
       print.line( "[INFO]: Extension #extension# has been deployed!" ).toConsole();
     }
+    sleep( 3000 );
 
     print.line( "[INFO]: Extension installation complete. Exiting module." ).toConsole();
   }
