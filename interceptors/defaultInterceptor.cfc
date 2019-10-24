@@ -52,7 +52,9 @@ component accessors="true" {
     print.line( "[INFO]: Starting installation of #extensions.len()# extension#extensions.len() == 1 ? '' : 's'#." ).toConsole();
 
     for ( var extension in extensions ) {
-      fileMove( '#extensionDirectory#/#extension#', '#deployDirectory#/#extension#' );
+      var srcLex = '#extensionDirectory#/#extension#';
+      var destLex = '#deployDirectory#/#extension#';
+      fileMove( srcLex, destLex );
 
       print.line( "[INFO]: Extension #extension# was moved to deployment folder." ).toConsole();
     }
