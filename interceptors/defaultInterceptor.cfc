@@ -55,8 +55,13 @@ component accessors="true" {
       var srcLex = '#extensionDirectory#/#extension#';
       var destLex = '#deployDirectory#/#extension#';
       fileMove( srcLex, destLex );
-
       print.line( "[INFO]: Extension #extension# was moved to deployment folder." ).toConsole();
+
+      while( fileExists( destLex ) ) {
+        print.line( "[INFO]: Waiting for #extension# to be deployed..." ).toConsole();
+        sleep( 3000 );
+      }
+      print.line( "[INFO]: Extension #extension# has been deployed!" ).toConsole();
     }
 
     print.line( "[INFO]: Extension installation complete. Exiting module." ).toConsole();
