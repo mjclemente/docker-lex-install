@@ -1,7 +1,5 @@
 component accessors="true" {
 
-  property name="print" inject="PrintBuffer";
-
   //http://commandbox.ortusbooks.com/developing-for-commandbox/injection-dsl
   //https://github.com/Ortus-Solutions/commandbox/blob/master/src/cfml/system/Shell.cfc
 
@@ -10,6 +8,7 @@ component accessors="true" {
   * @hint Checks for extensions in config folder; if found, migrates them to Lucee Server's /deploy
   */
   function onServerStart( interceptData ) {
+    var print = wirebox.getInstance( "PrintBuffer" );
     print.line().line( "[INFO]: .lex Installation module intercepted onServerStart()." ).toConsole();
     var installDetails = interceptData.installDetails;
     //shell.printString( installDetails );
