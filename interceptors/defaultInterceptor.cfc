@@ -55,6 +55,17 @@ component accessors="true" {
       var destLex = '#deployDirectory#/#extension#';
       fileMove( srcLex, destLex );
       print.line( "[INFO]: Extension #extension# was moved to deployment folder." ).toConsole();
+    }
+    
+    if( installDetails.initialInstall ) {
+      print.line( "******************************************" ).toConsole();
+      print.line( "[INFO]: This is the first server start." ).toConsole();
+      print.line( "[INFO]: To ensure extensions are loaded, please complete a warmup cycle of the server." ).toConsole();
+      print.line( "******************************************" ).toConsole();
+    }
+
+    print.line( "[INFO]: Extension deployment complete. Resuming server start." ).toConsole();
+  }
 
       while( fileExists( destLex ) ) {
         print.line( "[INFO]: Waiting for #extension# to be deployed..." ).toConsole();
