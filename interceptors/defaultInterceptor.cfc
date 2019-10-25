@@ -67,15 +67,40 @@ component accessors="true" {
     print.line( "[INFO]: Extension deployment complete. Resuming server start." ).toConsole();
   }
 
-      while( fileExists( destLex ) ) {
-        print.line( "[INFO]: Waiting for #extension# to be deployed..." ).toConsole();
-        sleep( 3000 );
-      }
-      print.line( "[INFO]: Extension #extension# has been deployed!" ).toConsole();
-    }
-    sleep( 3000 );
 
-    print.line( "[INFO]: Extension installation complete. Exiting module." ).toConsole();
+  /**
+  * @hint When the warmup is completed, this confirms that the extensions have been deployed, prior to finishing shut down
+  */
+  function onServerStop( interceptData ) {
+    var print = wirebox.getInstance( "PrintBuffer" );
+    print.line().line( "[INFO]: .lex Installation module intercepted onServerStop()." ).toConsole();
+
+    var deployDirectory = returnDeployDirectory( interceptData.serverInfo );
+    print.line( "[INFO]: Extension deployment directory: #deployDirectory#" ).toConsole();
+
+    var extensions = directoryList( deployDirectory, false, 'name', '*.lex' );
+
+    if( extensions.len() ) {
+      print.line( "[INFO]: Extensions found. Delaying server stop." ).toConsole();
+      print.line( "[INFO]: Waiting on deployment of #extensions.len()# extension#extensions.len() == 1 ? '' : 's'#." ).toConsole();
+
+      for ( var extension in extensions ) {
+        var destLex = '#deployDirectory#/#extension#';
+        while( fileExists( destLex ) ) {
+            print.line( "[INFO]: Waiting for #extension# to be deployed..." ).toConsole();
+            sleep( 3000 );
+          }
+        print.line( "[INFO]: Extension #extension# has been deployed!" ).toConsole();
+      }
+      sleep( 3000 );
+    }
+
+    print.line( "[INFO]: No remaining extensions to deploy. Resuming server stop." ).toConsole();
+  }
+
+  private function returnDeployDirectory( serverInfo ) {
+    var serverHome = serverInfo.serverHome & serverInfo.serverConfigDir;
+    return serverHome & '/lucee-server/deploy';
   }
 
 }
