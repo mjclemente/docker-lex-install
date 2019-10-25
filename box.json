@@ -1,8 +1,8 @@
 {
     "name": "CommandBox Docker .lex Install",
-    "version": "0.0.1",
+    "version": "0.0.2-alpha",
     "author":"Matthew Clemente <mjclemente@gmail.com>",
-    "location":"mjclemente/docker-lex-install#v0.0.1",
+    "location":"mjclemente/docker-lex-install#v0.0.2-alpha",
     "homepage":"https://github.com/mjclemente/docker-lex-install",
     "documentation":"https://github.com/mjclemente/docker-lex-install",
     "repository":{
