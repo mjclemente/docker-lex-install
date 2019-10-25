@@ -56,7 +56,7 @@ component accessors="true" {
       fileMove( srcLex, destLex );
       print.line( "[INFO]: Extension #extension# was moved to deployment folder." ).toConsole();
     }
-    
+
     if( installDetails.initialInstall ) {
       print.line( "******************************************" ).toConsole();
       print.line( "[INFO]: This is the first server start." ).toConsole();
