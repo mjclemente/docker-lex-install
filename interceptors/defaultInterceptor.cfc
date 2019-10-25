@@ -36,9 +36,7 @@ component accessors="true" {
       return;
     }
 
-    var serverInfo = interceptData.serverInfo;
-    var serverHome = serverInfo.serverHome & serverInfo.serverConfigDir;
-    var deployDirectory = serverHome & '/lucee-server/deploy';
+    var deployDirectory = returnDeployDirectory( interceptData.serverInfo );
 
     print.line( "[INFO]: Set extension deployment directory: #deployDirectory#" ).toConsole();
 
