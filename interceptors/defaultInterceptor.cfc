@@ -14,7 +14,7 @@ component accessors="true" {
     //shell.printString( installDetails );
 
     //only run for Lucee
-    if ( installDetails.enginename != 'lucee' ) {
+    if ( !findNoCase( "lucee", installDetails.enginename ) ) {
       print.line( "[INFO]: CFEngine not Lucee. Exiting module." ).toConsole();
       return;
     }
