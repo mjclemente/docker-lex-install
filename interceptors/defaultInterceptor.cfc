@@ -97,7 +97,7 @@ component accessors="true" {
   }
 
   private function returnDeployDirectory( serverInfo ) {
-    var serverHome = serverInfo.serverHome & serverInfo.serverConfigDir;
+    var serverHome = serverInfo.serverHomeDirectory & serverInfo.serverConfigDir;
     return serverHome & '/lucee-server/deploy';
   }
 
